@@ -19,7 +19,12 @@ const Part = (props) => {
 }
 
 const Total = (props) => {
-  const sum = props.total.reduce((total, value) => total = total + value.exercise, 0)
+  const parts = props.total
+  let sum = 0
+
+  for (let index = 0; index < parts.length; index++) {
+    sum += parts[index].exercise
+  }
 
   return <p>Number of exercises {sum}</p>
 }
