@@ -1,9 +1,14 @@
 const Total = (props) => {
-  const sum = props.total.length;
+  const { parts } = props;
+  const initialValue = 0;
+  const total = parts.reduce(
+    (accumulator, currentValue) => accumulator + currentValue.exercises,
+    initialValue
+  );
 
   return (
     <>
-      <p>Number of exercises {sum}</p>
+      <p>Number of exercises {total}</p>
     </>
   );
 };

@@ -9,7 +9,7 @@ const Course = (props) => {
     <div>
       <Header name={name} />
       <Content parts={parts} />
-      <Total total={parts} />
+      <Total parts={parts} />
     </div>
   );
 };
