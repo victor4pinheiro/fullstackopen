@@ -2,7 +2,7 @@ const Person = (props) => {
   return (
     <li>
       <p>
-        Name: {props.name}. Phone number: {props.phone}
+        Name: {props.name}. Phone number: {props.number}
       </p>
     </li>
   );

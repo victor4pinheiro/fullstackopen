@@ -6,7 +6,7 @@ const Persons = (props) => {
     <div>
       <h2>{title}</h2>
       {persons.map((person) => (
-        <Person key={person.id} name={person.name} phone={person.phoneNumber} />
+        <Person key={person.id} name={person.name} number={person.number} />
       ))}
     </div>
   );
