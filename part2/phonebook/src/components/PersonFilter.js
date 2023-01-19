@@ -1,4 +1,3 @@
-import Persons from "./Persons";
 import "../style.css";
 
 const PersonFilter = (props) => {
@@ -18,7 +17,13 @@ const PersonFilter = (props) => {
         />
       </div>
 
-      <Persons persons={results} title="Resultado da pesquisa" />
+      <div>
+        {results.map((person) => (
+          <p key={person.id}>
+            Name: {person.name}. Phone number: {person.number}
+          </p>
+        ))}
+      </div>
     </div>
   );
 };
