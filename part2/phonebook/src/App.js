@@ -1,4 +1,6 @@
+import { HttpStatusCode } from "axios";
 import { useEffect, useState } from "react";
+import Notification from "./components/Notification";
 import PersonFilter from "./components/PersonFilter";
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
@@ -10,6 +12,8 @@ const App = () => {
   const [newPhoneNumber, setNewPhoneNumber] = useState("");
   const [newNameSearch, setNewNameSearch] = useState("");
   const [newResults, setNewResults] = useState([]);
+  const [message, setNewMessage] = useState(null);
+  const [typeMessage, setTypeMessage] = useState(null);
 
   const hooksPerson = () => {
     personService.getAll().then((response) => {
@@ -34,6 +38,14 @@ const App = () => {
         };
 
         personService.update(person.id, newPerson).then((response) => {
+          setNewMessage(`${newPerson.name}'s info was updated`);
+          setTypeMessage(HttpStatusCode.Created);
+
+          setTimeout(() => {
+            setNewMessage(null);
+            setTypeMessage(null);
+          }, 2000);
+
           setPersons(
             persons.map((person) =>
               person.id !== newPerson.id ? person : newPerson
@@ -48,6 +60,14 @@ const App = () => {
       };
 
       personService.create(newPerson).then((response) => {
+        setNewMessage(`${newPerson.name} sucessfully created`);
+        setTypeMessage(HttpStatusCode.Created);
+
+        setTimeout(() => {
+          setNewMessage(null);
+          setTypeMessage(null);
+        }, 2000);
+
         setPersons(persons.concat(response));
       });
     }
@@ -62,9 +82,17 @@ const App = () => {
 
     if (!stateDelete) return;
 
-    personService
-      .remove(id)
-      .then(setPersons(persons.filter((person) => person.id !== id)));
+    personService.remove(id).then(() => {
+      setNewMessage(`${person.name} was removed`);
+      setTypeMessage(HttpStatusCode.BadRequest);
+
+      setTimeout(() => {
+        setNewMessage("");
+        setTypeMessage("");
+      }, 2000);
+
+      setPersons(persons.filter((person) => person.id !== id));
+    });
   };
 
   const handleName = (event) => {
@@ -87,6 +115,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+
+      <Notification message={message} type={typeMessage} />
 
       <PersonFilter
         name={newNameSearch}
