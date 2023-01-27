@@ -6,7 +6,7 @@ const Persons = (props) => {
     <div>
       <h2>{title}</h2>
       {persons.map((person) => (
-        <Person key={person.id} person={person} handleDelete={handleDelete} />
+        <Person key={person._id} person={person} handleDelete={handleDelete} />
       ))}
     </div>
   );

@@ -37,7 +37,7 @@ const App = () => {
           number: newPhoneNumber,
         };
 
-        personService.update(person.id, newPerson).then((response) => {
+        personService.update(person._id, newPerson).then((response) => {
           setNewMessage(`${newPerson.name}'s info was updated`);
           setTypeMessage(HttpStatusCode.Created);
 
@@ -48,7 +48,7 @@ const App = () => {
 
           setPersons(
             persons.map((person) =>
-              person.id !== newPerson.id ? person : newPerson
+              person._id !== newPerson._id ? person : newPerson
             )
           );
         });
@@ -77,21 +77,21 @@ const App = () => {
   };
 
   const deletePerson = (id) => {
-    const person = persons.find((person) => person.id === id);
+    const person = persons.find((person) => person._id === id);
     const stateDelete = window.confirm(`Do you want to delete ${person.name}`);
 
     if (!stateDelete) return;
 
-    personService.remove(id).then(() => {
+    personService.remove(id).then((response) => {
       setNewMessage(`${person.name} was removed`);
       setTypeMessage(HttpStatusCode.BadRequest);
 
       setTimeout(() => {
-        setNewMessage("");
-        setTypeMessage("");
+        setNewMessage(null);
+        setTypeMessage(null);
       }, 2000);
 
-      setPersons(persons.filter((person) => person.id !== id));
+      setPersons(persons.filter((person) => person._id !== id));
     });
   };
 

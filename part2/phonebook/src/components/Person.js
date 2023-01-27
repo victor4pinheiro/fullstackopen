@@ -1,12 +1,12 @@
 const Person = (props) => {
   const { handleDelete, person } = props;
-  const { id, name, number } = person;
+  const { _id, name, number } = person;
 
   return (
     <li>
       <p>
-        Name: {name}. Phone number: {number}
-        <button type="submit" onClick={() => handleDelete(id)}>
+        Name: {name}. Phone number: {number}.
+        <button type="submit" onClick={() => handleDelete(_id)}>
           delete
         </button>
       </p>

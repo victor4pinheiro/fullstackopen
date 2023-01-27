@@ -19,7 +19,7 @@ const PersonFilter = (props) => {
 
       <div>
         {results.map((person) => (
-          <p key={person.id}>
+          <p key={person._id}>
             Name: {person.name}. Phone number: {person.number}
           </p>
         ))}
