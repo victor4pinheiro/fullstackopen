@@ -9,23 +9,22 @@ const Notification = (props) => {
   if (type === HttpStatusCode.Created) {
     colour = "#1a7009";
   } else if (type === HttpStatusCode.BadRequest) {
-    colour = "#702109";
+    colour = "#b00000";
   } else {
     colour = "#000";
   }
 
   const notification = {
     div: {
-      border: `1px solid ${colour}`,
-    },
-    p: {
-      colour,
+      width: "300px",
+      border: `5px solid ${colour}`,
+      borderRadius: "5px",
     },
   };
 
   return (
     <div style={notification.div}>
-      <p style={notification.p}>{message}</p>
+      <p>{message}</p>
     </div>
   );
 };
