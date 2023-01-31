@@ -37,21 +37,33 @@ const App = () => {
           number: newPhoneNumber,
         };
 
-        personService.update(person._id, newPerson).then((response) => {
-          setNewMessage(`${newPerson.name}'s info was updated`);
-          setTypeMessage(HttpStatusCode.Created);
+        personService
+          .update(person._id, newPerson)
+          .then((response) => {
+            setNewMessage(`${response.name}'s info was updated`);
+            setTypeMessage(HttpStatusCode.Created);
 
-          setTimeout(() => {
-            setNewMessage(null);
-            setTypeMessage(null);
-          }, 2000);
+            setTimeout(() => {
+              setNewMessage(null);
+              setTypeMessage(null);
+            }, 2000);
 
-          setPersons(
-            persons.map((person) =>
-              person._id !== newPerson._id ? person : newPerson
-            )
-          );
-        });
+            setPersons(
+              persons.map((person) =>
+                person._id !== newPerson._id ? person : newPerson
+              )
+            );
+          })
+          .catch((error) => {
+            const { message, status } = error.response.data;
+            setNewMessage(message);
+            setTypeMessage(status);
+
+            setTimeout(() => {
+              setNewMessage(null);
+              setTypeMessage(null);
+            }, 2000);
+          });
       }
     } else {
       const newPerson = {
@@ -59,17 +71,29 @@ const App = () => {
         number: newPhoneNumber,
       };
 
-      personService.create(newPerson).then((response) => {
-        setNewMessage(`${newPerson.name} sucessfully created`);
-        setTypeMessage(HttpStatusCode.Created);
+      personService
+        .create(newPerson)
+        .then((response) => {
+          setNewMessage(`${newPerson.name} sucessfully created`);
+          setTypeMessage(HttpStatusCode.Created);
 
-        setTimeout(() => {
-          setNewMessage(null);
-          setTypeMessage(null);
-        }, 2000);
+          setTimeout(() => {
+            setNewMessage(null);
+            setTypeMessage(null);
+          }, 2000);
 
-        setPersons(persons.concat(response));
-      });
+          setPersons(persons.concat(response));
+        })
+        .catch((error) => {
+          const { message, status } = error.response.data;
+          setNewMessage(message);
+          setTypeMessage(status);
+
+          setTimeout(() => {
+            setNewMessage(null);
+            setTypeMessage(null);
+          }, 2000);
+        });
     }
 
     setNewName("");
@@ -82,17 +106,29 @@ const App = () => {
 
     if (!stateDelete) return;
 
-    personService.remove(id).then((response) => {
-      setNewMessage(`${person.name} was removed`);
-      setTypeMessage(HttpStatusCode.BadRequest);
+    personService
+      .remove(id)
+      .then((response) => {
+        setNewMessage(`${response.name} was removed`);
+        setTypeMessage(HttpStatusCode.BadRequest);
 
-      setTimeout(() => {
-        setNewMessage(null);
-        setTypeMessage(null);
-      }, 2000);
+        setTimeout(() => {
+          setNewMessage(null);
+          setTypeMessage(null);
+        }, 2000);
 
-      setPersons(persons.filter((person) => person._id !== id));
-    });
+        setPersons(persons.filter((person) => person._id !== id));
+      })
+      .catch((error) => {
+        const { message, status } = error.response.data;
+        setNewMessage(message);
+        setTypeMessage(status);
+
+        setTimeout(() => {
+          setNewMessage(null);
+          setTypeMessage(null);
+        }, 2000);
+      });
   };
 
   const handleName = (event) => {
